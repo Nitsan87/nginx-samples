@@ -2,6 +2,8 @@
 
 ## - Run nginx container 
 ```
+cd reverse-proxy
+
 docker run -d -p 8000:80 -v ./static-html:/usr/share/nginx/html --name nginx-sample nginx
 
 docker cp ./default.conf nginx-sample:/etc/nginx/conf.d/
