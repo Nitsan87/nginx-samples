@@ -2,11 +2,9 @@
 
 ## - Run nginx container 
 ```
-cd reverse-proxy
+docker run -d -p 8000:80 -v ./reverse-proxy/static-html:/usr/share/nginx/html --name nginx-sample nginx
 
-docker run -d -p 8000:80 -v ./static-html:/usr/share/nginx/html --name nginx-sample nginx
-
-docker cp ./default.conf nginx-sample:/etc/nginx/conf.d/
+docker cp ./reverse-proxy/default.conf nginx-sample:/etc/nginx/conf.d/
 
 docker exec nginx-sample nginx -t
 
@@ -15,9 +13,7 @@ docker exec nginx-sample nginx -s reload
 
 ## - Run node sample app in multiple containers (x4):
 ```
-cd node-server
-
-docker build . -t node-sample-app 
+docker build ./reverse-proxy/node-server -t node-sample-app 
 
 docker run -p 1111:5000 -d node-sample-app 
 docker run -p 2222:5000 -d node-sample-app 
